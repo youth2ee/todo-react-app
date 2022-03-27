@@ -1,47 +1,48 @@
 import React from 'react';
 import Todo from './Todo';
 import AddTodo from './AddTodo.js';
-import { Paper, List, Container } from "@material-ui/core";
+import { Paper, List, Container, Grid, Button, AppBar, Toolbar, Typography } from "@material-ui/core";
 import './App.css';
-import { call } from "./service/ApiService";
+import { call, signout } from "./service/ApiService";
 
 class App extends React.Component {
-// 3-39
-componentDidMount() {
-  call("/todo", "GET", null).then((response) =>
-    this.setState({items:response.data})
-  );
-}
 
-// 3-11
+  // 3-11
   constructor(props) {
     super(props);
-    // (1) items 배열로
     this.state = {
       items: [],
+      loading:true,
     };
   }
 
-// 3-18
-add = (item) => {
-  call("/todo", "POST", item).then((response) =>
-    this.setState({items:response.data})
-  );
-};
+  // 3-39
+  componentDidMount() {
+    call("/todo", "GET", null).then((response) =>
+      this.setState({items:response.data, loading:false})
+    );
+  }
 
-// 3-24
-delete = (item) => {
-  call("/todo", "DELETE",item).then((response) => 
-    this.setState({items:response.data})
-  );
-};
+  // 3-18
+  add = (item) => {
+    call("/todo", "POST", item).then((response) =>
+      this.setState({items:response.data})
+    );
+  };
 
-// 3-44
-update = (item) => {
-  call("/todo","PUT",item).then((response) =>
-    this.setState({items:response.data})
-  );
-};
+  // 3-24
+  delete = (item) => {
+    call("/todo", "DELETE",item).then((response) => 
+      this.setState({items:response.data})
+    );
+  };
+
+  // 3-44
+  update = (item) => {
+    call("/todo","PUT",item).then((response) =>
+      this.setState({items:response.data})
+    );
+  };
 
 // 3-8, 3-9, 3-12, 3-14, 3-16
   render() {
@@ -55,14 +56,45 @@ update = (item) => {
       </Paper>
     );
 
-    return (
-      <div className="App">
+    // navigationBar 추가
+    var navigationBar = (
+      <AppBar position="static">
+        <Toolbar>
+          <Grid justify="space-between" container>
+            <Grid item>
+              <Typography variant='h6'>오늘의 할일</Typography>
+            </Grid>
+            <Grid>
+              <Button color="inherit" onClick={signout}>
+                로그아웃
+              </Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    );
+
+    // 로딩중이 아닐때 렌더링할 부분
+    var todoListPage = (
+      <div>
+        {navigationBar}
         <Container maxWidth="md">
-          <AddTodo add={this.add} />
-          <div className="TodoList">{todoItems}</div>
+            <AddTodo add={this.add} />
+            <div className='TodoList'>{todoItems}</div>
         </Container>
       </div>
-    )
+    );
+
+    // 로딩중일때 렌더링할 부분
+    var loadingPage = <h1>로딩중...</h1>;
+    var content = loadingPage;
+    if(!this.state.loading) {
+      //로딩중이 아니라면 todoListPage를 선택
+      content = todoListPage;
+    }
+
+    // 선택한 content 렌더링
+    return <div className='App'>{content}</div>;
 
   }
 }
