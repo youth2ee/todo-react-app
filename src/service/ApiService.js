@@ -23,12 +23,14 @@ export function call(api, method, request) {
   }
 
   return fetch(options.url, options)
-  .then((response) => {
-      if(!response.ok) {
-        return Promise.reject(response);
-      }
-      return response;
-    })
+    .then((response) =>
+      response.json().then((json) => {
+        if(!response.ok) {
+          return Promise.reject(json);
+        }
+        return json;
+      })
+    ) 
     .catch((error) => {
       if(error.status === 403) {
         window.location.href = "/login";
