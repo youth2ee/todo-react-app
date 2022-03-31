@@ -12,12 +12,15 @@ class AddTodo extends React.Component {
         const thisItem = this.state.item;
         thisItem.title = e.target.value;
         this.setState({item:thisItem});
-        console.log(thisItem);
     }
 
     onButtonClick = () => {
-        this.add(this.state.item);
-        this.setState({item:{title:""}});
+        if(this.state.item.title != '') {
+            this.add(this.state.item);
+            this.setState({item:{title:""}});
+        } else {
+            alert('값을 입력하세요.');
+        }
     }
 
     enterKeyEventHandler = (e) => {

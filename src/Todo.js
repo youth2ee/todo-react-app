@@ -19,11 +19,8 @@ class Todo extends React.Component {
 
 // 3-31
     offReadOnlyMode = () => {
-        console.log("Event!", this.state.readOnly)
-        this.setState({readOnly:false}, () => {
-            console.log("ReadOnly?", this.state.readOnly)
-        }
-    )};
+        this.setState({readOnly:false});
+    }
 
 // 3-33
     enterKeyEventHandler = (e) => {

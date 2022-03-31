@@ -37,7 +37,7 @@ class Login extends React.Component {
                             <TextField variant="outlined" required fullWidth name="password" label="패스워드" type="password" id="password" autoComplete="current-password" />
                         </Grid>
                         <Grid item xs={12}>
-                            <Button type="submit" fullWidth variant="contained" color="primary">
+                            <Button type="submit" fullWidth variant="contained" color="secondary">
                                 로그인
                             </Button>
                         </Grid>
