@@ -14,7 +14,11 @@ class Todo extends React.Component {
 
 // 3-27
     deleteEventHandeler = () => {
-        this.delete(this.state.item)
+        if(window.confirm("삭제하시겠습니까?")) {
+            alert("삭제되었습니다.");
+            this.delete(this.state.item)   
+        }
+    
     }
 
 // 3-31

@@ -58,15 +58,15 @@ class App extends React.Component {
 
     // navigationBar 추가
     var navigationBar = (
-      <AppBar position="static">
+      <AppBar position="static" color="secondary">
         <Toolbar>
           <Grid justifyContent="space-between" container>
             <Grid item>
-              <Typography variant='h6'>오늘의 할일</Typography>
+              <Typography variant='h6'>* CHECKLIST *</Typography>
             </Grid>
             <Grid>
               <Button color="inherit" onClick={signout}>
-                로그아웃
+                LOGOUT
               </Button>
             </Grid>
           </Grid>
